@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.edutech.progressive.entity.Patient;
 import com.edutech.progressive.service.PatientService;
-@Primary
+
 @Service
 public class PatientServiceImplArraylist implements PatientService {
 

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.edutech.progressive.dao.DoctorDAO;
 import com.edutech.progressive.entity.Doctor;
 import com.edutech.progressive.service.DoctorService;

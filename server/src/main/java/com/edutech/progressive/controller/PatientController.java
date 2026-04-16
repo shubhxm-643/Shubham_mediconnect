@@ -2,10 +2,7 @@ package com.edutech.progressive.controller;
 
 import com.edutech.progressive.entity.Patient;
 import com.edutech.progressive.service.PatientService;
-import com.edutech.progressive.service.impl.PatientServiceImplArraylist;
-import com.edutech.progressive.service.impl.PatientServiceImplJdbc;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,21 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
-    PatientService patientService;
-    
 
-    public PatientController(PatientService patientService) {
-        this.patientService = patientService;
+    PatientService ps;
+    public PatientController(PatientService ps){
+        this.ps = ps;
     }
 
     @GetMapping
     public ResponseEntity<List<Patient>> getAllPatients() {
         try {
-            return new ResponseEntity<>(patientService.getAllPatients(), HttpStatus.OK);
+            return new ResponseEntity<>(ps.getAllPatients(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -41,7 +36,7 @@ public class PatientController {
     @GetMapping("/{patientID}")
     public ResponseEntity<Patient> getPatientById(@PathVariable("patientID") int patientId) {
         try {
-            return new ResponseEntity<>(patientService.getPatientById(patientId), HttpStatus.OK);
+            return new ResponseEntity<>(ps.getPatientById(patientId), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -50,7 +45,7 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<Integer> addPatient(@RequestBody Patient patient) {
         try {
-            return new ResponseEntity<>(patientService.addPatient(patient), HttpStatus.OK);
+            return new ResponseEntity<>(ps.addPatient(patient), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -59,8 +54,8 @@ public class PatientController {
     @PutMapping("/{patientID}")
     public ResponseEntity<Void> updatePatient(@PathVariable("patientID") int patientId, @RequestBody Patient patient) {
         try {
-            patient.setPatientId(patientId);
-            patientService.updatePatient(patient);
+            if(ps.getPatientById(patientId)!=null)
+            ps.updatePatient(patient);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -70,8 +65,8 @@ public class PatientController {
     @DeleteMapping("/{patientID}")
     public ResponseEntity<Void> deletePatient(@PathVariable("patientID") int patientId) {
         try {
-            patientService.deletePatient(patientId);
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            ps.deletePatient(patientId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -79,9 +74,8 @@ public class PatientController {
 
     @GetMapping("/fromArrayList")
     public ResponseEntity<List<Patient>> getAllPatientFromArrayList() {
-        // return new ResponseEntity<>(HttpStatus.OK);
         try {
-            return new ResponseEntity<>(patientService.getAllPatients(), HttpStatus.OK);
+            return new ResponseEntity<>(ps.getAllPatients(),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -89,9 +83,8 @@ public class PatientController {
 
     @PostMapping("/toArrayList")
     public ResponseEntity<Void> addPatientToArrayList() {
-        //return new ResponseEntity<>(HttpStatus.CREATED);
         try {
-            patientService.addPatient(null);
+            ps.addPatient(null);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -100,9 +93,8 @@ public class PatientController {
 
     @GetMapping("/fromArrayList/sorted")
     public ResponseEntity<List<Patient>> getAllPatientSortedByNameFromArrayList() {
-        //return new ResponseEntity<>(HttpStatus.OK);
         try {
-            return new ResponseEntity<>(patientService.getAllPatientSortedByName(), HttpStatus.OK);
+            return new ResponseEntity<>(ps.getAllPatientSortedByName(),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

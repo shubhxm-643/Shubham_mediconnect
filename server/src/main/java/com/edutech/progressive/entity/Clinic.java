@@ -1,14 +1,17 @@
 package com.edutech.progressive.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Clinic {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int clinicId;
     private String clinicName;
     private String location;
@@ -16,7 +19,12 @@ public class Clinic {
     private String contactNumber;
     private int establishedYear;
 
-    public Clinic(){}
+    @OneToMany(mappedBy = "clinic")
+    List<Doctor> doctors = new ArrayList<>();
+
+    public Clinic() {
+
+    }
 
     public Clinic(int clinicId, String clinicName, String location, int doctorId, String contactNumber,
             int establishedYear) {
@@ -75,5 +83,5 @@ public class Clinic {
     public void setEstablishedYear(int establishedYear) {
         this.establishedYear = establishedYear;
     }
-    
+
 }

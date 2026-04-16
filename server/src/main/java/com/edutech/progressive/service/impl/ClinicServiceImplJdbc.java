@@ -4,17 +4,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.edutech.progressive.dao.ClinicDAO;
 import com.edutech.progressive.entity.Clinic;
 import com.edutech.progressive.service.ClinicService;
-
+@Service
 public class ClinicServiceImplJdbc implements ClinicService {
-
     private ClinicDAO clinicDAO;
-
+    @Autowired
     public ClinicServiceImplJdbc(ClinicDAO clinicDAO) {
         this.clinicDAO = clinicDAO;
     }
+
+    
 
     @Override
     public List<Clinic> getAllClinics() throws SQLException {

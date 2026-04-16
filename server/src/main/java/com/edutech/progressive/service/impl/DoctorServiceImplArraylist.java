@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.edutech.progressive.entity.Doctor;
 import com.edutech.progressive.service.DoctorService;
 
@@ -23,7 +25,7 @@ public class DoctorServiceImplArraylist implements DoctorService {
     @Override
     public Integer addDoctor(Doctor doctor) {
         doctorList.add(doctor);
-        return 1;
+        return doctor.getDoctorId();
     }
 
     @Override

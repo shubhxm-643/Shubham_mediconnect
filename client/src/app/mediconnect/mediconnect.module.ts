@@ -1,26 +1,40 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
  
+import { MediconnectRoutingModule } from './mediconnect-routing.module';
+import { SharedModule } from '../shared/shared.module';
+ 
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PatientCreateComponent } from './components/patientcreate/patientcreate.component';
 import { DoctorCreateComponent } from './components/doctorcreate/doctorcreate.component';
 import { ClinicCreateComponent } from './components/cliniccreate/cliniccreate.component';
+import { AppointmentCreateComponent } from './components/appointment/appointment.component';
+import { PatientEditComponent } from './components/patientedit/patientedit.component';
+import { ClinicEditComponent } from './components/clinicedit/clinicedit.component';
+import { DoctorEditComponent } from './components/doctoredit/doctoredit.component';
  
 @NgModule({
   declarations: [
+    DashboardComponent,
     PatientCreateComponent,
     DoctorCreateComponent,
-    ClinicCreateComponent
+    ClinicCreateComponent,
+    AppointmentCreateComponent,
+    PatientEditComponent,
+    ClinicEditComponent,
+    DoctorEditComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
-    FormsModule
-  ],
-  exports: [
-    PatientCreateComponent,
-    DoctorCreateComponent,
-    ClinicCreateComponent
+    HttpClientModule,
+    RouterModule,
+    MediconnectRoutingModule,
+    SharedModule    // << VERY IMPORTANT FOR DAY‑26
   ]
 })
 export class MediconnectModule {}
